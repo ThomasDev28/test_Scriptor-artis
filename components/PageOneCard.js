@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-page-custom-font */
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Carousel from "react-material-ui-carousel";
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
       transition: ".5s",
       cursor: "pointer",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       fontSize: 80,
     },
   },
@@ -71,97 +73,106 @@ export default function PageSolo({ dataOneCard }) {
   }, []);
 
   const router = useRouter();
-  
-// ajout d'un window.scroll au cas où le détails serait trop long et qu'il y est un scroll et que le scroll reste au même endroit quand je navigue
+
+  /* ajout d'un window.scroll au cas où le détails serait trop long et 
+  que le scroll reste au même endroit quand je navigue sur d'autres pages */
   const backPagePrincipal = () => {
-    window.scroll(0, 0)
+    window.scroll(0, 0);
     router.push("/");
   };
 
   return (
     <>
-    <Head>
-    <title>Space X - {info.mission_name}</title>
+      <Head>
+        <title>Space X - {info.mission_name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
           href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap"
           rel="stylesheet"
         />
-        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" /> 
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+          rel="stylesheet"
+        />
       </Head>
-    <div className={styles.page}>
-      <div className={styles.section__caroussel}>
-        <Carousel
-          next={() => {
-            image.length != 0 ? image.length++ : imgDecollage.length++;
-          }}
-          autoPlay={true}
-          interval={6000}
-          animation={"fade"}
-          timeout={600}
-          className={styles.carousel__container}
-          navButtonsAlwaysInvisible="true"
-          indicatorContainerProps={{
-            style: {
-              width: "100%",
-              position: "absolute",
-              textAlign: "center",
-              bottom: "20px",
-            },
-          }}
-          indicatorIconButtonProps={{
-            style: {
-              padding: "5px",
-              color: "rgb(0, 240, 168)",
-            },
-          }}
-          activeIndicatorIconButtonProps={{
-            style: {
-              color: "#fff",
-            },
-          }}
-        >
-          {image.length != 0
-            ? image.map((item, i) => (
-                <Image
-                  key={i}
-                  src={item}
-                  alt="image"
-                  className={styles.img}
-                  layout="fill"
-                />
-              ))
-            : imgDecollage.map((item, i) => {
-                console.log(item.image);
-                return (
+      <div className={styles.page}>
+        <div className={styles.section__caroussel}>
+          <Carousel
+            next={() => {
+              image.length != 0 ? image.length++ : imgDecollage.length++;
+            }}
+            autoPlay={true}
+            interval={6000}
+            animation={"fade"}
+            timeout={600}
+            className={styles.carousel__container}
+            navButtonsAlwaysInvisible="true"
+            indicatorContainerProps={{
+              style: {
+                width: "100%",
+                position: "absolute",
+                textAlign: "center",
+                bottom: "20px",
+              },
+            }}
+            indicatorIconButtonProps={{
+              style: {
+                padding: "5px",
+                color: "rgb(0, 240, 168)",
+              },
+            }}
+            activeIndicatorIconButtonProps={{
+              style: {
+                color: "#fff",
+              },
+            }}
+          >
+            {image.length != 0
+              ? image.map((item, i) => (
                   <Image
                     key={i}
-                    src={item.image}
+                    src={item}
                     alt="image"
                     className={styles.img}
                     layout="fill"
                   />
-                );
-              })}
-        </Carousel>
-      </div>
-      <div className={styles.info}>
-        <h1 style={{fontFamily: "'Otomanopee One', sans-serif"}}>{info.rocket.rocket_name}</h1>
-        <h2>{info.launch_date_local}</h2>
-        <p id="sucess" style={{fontFamily: "'Lobster', cursive", fontSize: "35px"}}>
-          Succes: {info.rocket.first_stage.cores[0].land_success ? "✅" : "❌"}
-        </p>
-        <h3>Details:</h3>
-        <div className={styles.details}>
-          <p>
-            {info.details
-              ? info.details
-              : "There is not details for this mission..."}
-          </p>
+                ))
+              : imgDecollage.map((item, i) => {
+                  return (
+                    <Image
+                      key={i}
+                      src={item.image}
+                      alt="image"
+                      className={styles.img}
+                      layout="fill"
+                    />
+                  );
+                })}
+          </Carousel>
         </div>
-        <HomeIcon className={classes.back_accueil} onClick={backPagePrincipal} />
+        <div className={styles.info}>
+          <h1 style={{ fontFamily: "'Otomanopee One', sans-serif" }}>
+            {info.rocket.rocket_name}
+          </h1>
+          <h2>{info.launch_date_local}</h2>
+          <p style={{ fontFamily: "'Lobster', cursive", fontSize: "35px" }}>
+            Succes:{" "}
+            {info.rocket.first_stage.cores[0].land_success ? "✅" : "❌"}
+          </p>
+          <h3>Details:</h3>
+          <div className={styles.details}>
+            <p>
+              {info.details
+                ? info.details
+                : "There is not details for this mission..."}
+            </p>
+          </div>
+          <HomeIcon
+            className={classes.back_accueil}
+            onClick={backPagePrincipal}
+          />
+        </div>
       </div>
-    </div>
     </>
   );
 }
