@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-page-custom-font */
-import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
@@ -162,7 +161,7 @@ export default function CardRocket({
               onClick={clikBtn}
               className={classes.btn}
             >
-              Get Check
+              Go Check
             </Button>
           </CardActions>
         </Card>
